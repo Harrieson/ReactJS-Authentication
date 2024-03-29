@@ -35,3 +35,19 @@ export const SignInController = async (req, res, next) => {
     next(error);
   }
 };
+
+export const googleController = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email : req.body.email});
+
+    if (user) {
+      const token = jwt.sign({id : user._id}, process.env.JWT_SECRET);
+      const {password: hashedPassword, createdAt, _id, __v, ...userDetails} = validUser._doc;
+    const validity = new Date(Date.now() + 604800000); // One week.
+    } else {
+
+    }
+  } catch (error) {
+    next(error);
+  }
+}
