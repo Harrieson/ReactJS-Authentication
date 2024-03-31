@@ -10,7 +10,7 @@ export default function OAuth() {
       const auth = getAuth(app);
 
       const result = await signInWithPopup(auth, provider);
-      const response = await fetch('/api/auth/google', {
+      const response = await fetch('http://localhost:8000/api/auth/google', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -18,15 +18,14 @@ export default function OAuth() {
         body : JSON.stringify({
             name: result.user.displayName,
             email: result.user.email,
-            image: result.metadata.photoUrl,
-            provider: result.providerId
+            photo: result.user.photoURL,
         }),
       });
 
       const data = await response.json();
       dispatch(signInSuccess(data))
     } catch (error) {
-      console.log(" Could not login With Google", error);
+      console.log(" Could not login With Google: ", error);
     }
   };
 
